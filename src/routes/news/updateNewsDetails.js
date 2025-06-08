@@ -17,8 +17,8 @@ module.exports = async (req, res) => {
       });
     }
 
-    if (req.body.newsID && req.body.newsID != null && req.body.newsID != undefined && req.body.newsID > 0) {
-      var newsID = req.body.newsID
+    if (req.params.id && req.params.id != null && req.params.id != undefined && req.params.id > 0) {
+      var newsID = req.params.id
     } else {
       res.send({
         status: false,

@@ -3,7 +3,7 @@ const db = require('../../db');
 
 module.exports = async (req, res) => {
     try {
-    const newsId = parseInt(req.body.id);
+    const newsId = parseInt(req.params.id);
 
     if (isNaN(newsId)) {
       return res.status(400).json({ message: 'Invalid news ID' });

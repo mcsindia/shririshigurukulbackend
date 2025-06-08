@@ -10,8 +10,8 @@ router.post('/updateUser', require('./users/updateUser'));
 //news
 router.get('/getAllNewsList', require('./news/getAllNewsList'));
 router.post('/insertNewsData', upload.single('image'), require('./news/insertNewsData'));
-router.post('/updateNewsDetails', upload.single('image'), require('./news/updateNewsDetails'));
-router.post('/deleteNews', require('./news/deleteNews'));
+router.put('/updateNewsDetails/:id', upload.single('image'), require('./news/updateNewsDetails'));
+router.delete('/deleteNews/:id', require('./news/deleteNews'));
 
 
 module.exports = router;
