@@ -8,6 +8,7 @@ module.exports = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
 
+    const searchText = req.query.search || '';
     let statusFilter = req.query.status === 'Active' ? true
                   : req.query.status === 'Inactive' ? false
                   : 'all';
@@ -18,18 +19,20 @@ let params;
 if (statusFilter !== 'all') {
   querySQL = `
     SELECT * FROM "adminSite".news 
-    WHERE "status" = $3
+    WHERE "status" = $3 
+    AND LOWER("title") LIKE LOWER('%' || $4 || '%')
     ORDER BY "newsid" ASC  
     LIMIT $1 OFFSET $2;
   `;
-  params = [limit, offset, statusFilter];
+  params = [limit, offset, statusFilter,searchText];
 } else {
   querySQL = `
     SELECT * FROM "adminSite".news 
+    WHERE LOWER("title") LIKE LOWER('%' || $3 || '%')
     ORDER BY "newsid" ASC  
     LIMIT $1 OFFSET $2;
   `;
-  params = [limit, offset];
+  params = [limit, offset,searchText];
 }
 
 const results = await db.query(querySQL, params);

@@ -1,33 +1,59 @@
-// updateNewsDetails
 const db = require('../../db');
 
 module.exports = async (req, res) => {
   try {
+    console.log('updateNews API hit');
 
-    const { FullName, Email,RoleID,Status} = req.body;
-    if(req.body.UserID && req.body.UserID !=null && req.body.UserID !=undefined && req.body.UserID>0){
-    var userID = req.body.UserID
-    }else{
-        res.send({status:false,msg:"User ID is required"})
+    const {
+      Title,
+      Slug,
+      Description,
+      Status
+    } = req.body;
+
+    if (!req.file) {
+      return res.status(400).json({
+        error: 'Image file is required'
+      });
     }
+
+    if (req.body.newsID && req.body.newsID != null && req.body.newsID != undefined && req.body.newsID > 0) {
+      var newsID = req.body.newsID
+    } else {
+      res.send({
+        status: false,
+        msg: "ID is required"
+      })
+    }
+
+    const fileName = req.file.filename;
+    const Image = `${req.protocol}://${req.get('host')}/uploads/website/news/${fileName}`;
 
     var UpdatedDate = new Date()
 
-  const query = `
-    UPDATE "adminSite".users
-    SET "FullName" = $1,
-        "Email" = $2,
-        "RoleID" = $3,
-        "Status" = $4,
-        "UpdatedDate" =$5
-    WHERE "UserID" = $5
-    RETURNING *;
-  `;
+    const query = `
 
-    const results = await db.query(query, [FullName, Email,RoleID,Status,userID,UpdatedDate]);
-    res.send({status:true,data:results.rows[0]});
+        UPDATE "adminSite".news
+        SET "image" = $1,
+        "title" = $2,
+        "slug" = $3,
+        "description" = $4,
+        "status" =$5,
+        "updated_at" = $6
+        WHERE "newsid" = $7
+        RETURNING *;
+    `;
+
+    const results = await db.query(query, [Image, Title, Slug, Description, Status, UpdatedDate, newsID]);
+    res.status(201).send({
+      status: true,
+      data: results.rows[0]
+    });
+
   } catch (err) {
-    console.error('Error fetching users:', err);
-    res.status(500).json({ error: 'Database error' });
+    console.error('Error updating news:', err);
+    res.status(500).json({
+      error: 'Database error'
+    });
   }
 };
