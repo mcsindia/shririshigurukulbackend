@@ -3,7 +3,7 @@ module.exports = {
     projectName: 'rishiGurukul',
     db: {
         development: {
-            client: 'mysql2',
+            client: 'pdAdmin 4',
 
             timezone: "UTC",
             connection: {

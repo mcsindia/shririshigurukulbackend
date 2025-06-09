@@ -66,4 +66,54 @@ router.put('/updateHeroBannerDetails/:id', (req, res, next) => {
 
 router.delete('/deleteHeroBanner/:id', require('./hero_banners/deleteHeroBanner'));
 
+//gallery
+//images
+router.post('/insertGalleryCollectionImage', (req, res, next) => {
+  req.uploadType = 'Gallery/images';
+  next();
+}, upload.single('image'), require('./Gallery/images/insertGalleryCollectionImage'));
+
+router.get('/getGalleryCollectionImagesList', require('./Gallery/images/getGalleryCollectionImagesList'));
+router.put('/updateGalleryCollectionImage/:id', (req, res, next) => {
+  req.uploadType = 'Gallery/images';
+  next();
+}, upload.single('image'), require('./Gallery/images/updateGalleryCollectionImage'));
+
+router.delete('/deleteGalleryCollectionImage/:id', require('./Gallery/images/deleteGalleryCollectionImage'));
+
+//subImages
+router.post('/insertGalleryItemsImage', (req, res, next) => {
+  req.uploadType = 'Gallery/images/subImage';
+  next();
+}, upload.array('image'), require('./Gallery/images/insertGalleryItemsImage'));
+
+router.get('/getGalleryItemsImage', require('./Gallery/images/getGalleryItemsImage'));
+router.put('/updateGalleryItemsImage/:id', (req, res, next) => {
+  req.uploadType = 'Gallery/images/subImage';
+  next();
+}, upload.single('image'), require('./Gallery/images/updateGalleryItemsImage'));
+
+router.delete('/deleteGalleryItemsImage/:id', require('./Gallery/images/deleteGalleryItemsImage'));
+
+//Gallery->videos
+router.post('/insertGalleryVideoCollection', (req, res, next) => {
+  req.uploadType = 'Gallery/videos';
+  next();
+}, upload.single('image'), require('./Gallery/videos/insertGalleryVideoCollection'));
+
+router.get('/getGalleryCollectionVideoList', require('./Gallery/videos/getGalleryCollectionVideoList'));
+
+router.put('/updateGalleryCollectionVideo/:id', (req, res, next) => {
+  req.uploadType = 'Gallery/videos';
+  next();
+}, upload.single('image'), require('./Gallery/videos/updateGalleryCollectionVideo'));
+
+router.delete('/deleteGalleryCollectionVideo/:id', require('./Gallery/videos/deleteGalleryCollectionVideo'));
+
+//gallery->videos-.subvideo
+router.post('/insertGalleyItemVideo', require('./Gallery/videos/insertGalleyItemVideo'));
+router.get('/getGalleryitemVideoList', require('./Gallery/videos/getGalleryitemVideoList'));
+router.put('/updateGalleryItemVideo/:id', require('./Gallery/videos/updateGalleryItemVideo'));
+router.delete('/deleteGalleryItemVideo/:id', require('./Gallery/videos/deleteGalleryItemVideo'));
+
 module.exports = router;

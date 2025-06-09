@@ -4,17 +4,8 @@ const path = require('path');
 // Define storage for the uploaded files
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    let folder='news';
-    if (req.uploadType === 'events') {
-      folder = 'events';
-    }else if(req.uploadType==='news'){
-      folder ='news'
-    }else if(req.uploadType==='blogs'){
-      folder ='blogs'
-    }else if(req.uploadType==='hero_banners'){
-      folder ='hero_banners'
-    }
-    cb(null, path.join(__dirname, '..', 'uploads', 'website', folder));
+    
+    cb(null, path.join(__dirname, '..', 'uploads', 'website', req.uploadType));
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
