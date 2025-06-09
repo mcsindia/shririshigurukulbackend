@@ -116,4 +116,9 @@ router.get('/getGalleryitemVideoList', require('./Gallery/videos/getGalleryitemV
 router.put('/updateGalleryItemVideo/:id', require('./Gallery/videos/updateGalleryItemVideo'));
 router.delete('/deleteGalleryItemVideo/:id', require('./Gallery/videos/deleteGalleryItemVideo'));
 
+//contact
+router.post('/insertContactUsDetails', require('./contact/insertContactUsDetails'));
+router.get('/getListOfContactQueries', require('./contact/getListOfContactQueries'));
+router.put('/updateContactQueryStatus/:id', require('./contact/updateContactQueryStatus'));
+
 module.exports = router;
