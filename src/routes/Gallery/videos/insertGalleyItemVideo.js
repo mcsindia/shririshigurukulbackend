@@ -14,20 +14,18 @@ module.exports = async (req, res) => {
     const inserted = [];
 
     for (const item of items) {
-      const { video_url, video_title, video_description, video_date, video_collection_id } = item;
+      const { video_url, video_title, video_collection_id } = item;
 
       const query = `
         INSERT INTO "adminSite".video_gallery_items
-        (video_url, video_title, video_description, video_date, video_collection_id)
-        VALUES ($1, $2, $3, $4, $5)
+        (video_url, video_title, video_collection_id)
+        VALUES ($1, $2, $3)
         RETURNING *;
       `;
 
       const result = await db.query(query, [
         video_url,
         video_title,
-        video_description,
-        video_date,
         video_collection_id
       ]);
 

@@ -7,8 +7,6 @@ module.exports = async (req, res) => {
 
         const {
             Title,
-            Description,
-            imageDate,
             collectionID
         } = req.body;
 
@@ -19,8 +17,6 @@ module.exports = async (req, res) => {
         }
 
         const titles = Array.isArray(Title) ? Title : [Title];
-        const descriptions = Array.isArray(Description) ? Description : [Description];
-        const dates = Array.isArray(imageDate) ? imageDate : [imageDate];
         const collectionIds = Array.isArray(collectionID) ? collectionID : [collectionID];
 
         const results = [];
@@ -32,16 +28,14 @@ module.exports = async (req, res) => {
 
             const query = `
       INSERT INTO "adminSite".image_gallery_items
-      ("image_path", "image_title", "image_description", "image_date", "collection_id")
-      VALUES ($1, $2, $3, $4, $5)
+      ("image_path", "image_title", "collection_id")
+      VALUES ($1, $2, $3)
       RETURNING *;
     `;
 
             const result = await db.query(query, [
                 imageUrl,
                 titles[i] || '',
-                descriptions[i] || '',
-                dates[i] || null,
                 collectionIds[i] || null
             ]);
 

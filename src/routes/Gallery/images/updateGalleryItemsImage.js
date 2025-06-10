@@ -6,8 +6,6 @@ module.exports = async (req, res) => {
   try {
 
      const { Title,
-            Description,
-            imageDate,
             collectionID} = req.body;
 
 
@@ -36,14 +34,12 @@ module.exports = async (req, res) => {
         UPDATE "adminSite".image_gallery_items
         SET "image_path" = $1,
         "image_title" = $2,
-        "image_description" = $3,
-        "image_date"=$4,
-        "updated_at"=$5
-        WHERE "item_id" = $6 AND "collection_id"=$7
+        "updated_at"=$3
+        WHERE "item_id" = $4 AND "collection_id"=$5
         RETURNING *;
     `;
 
-    const results = await db.query(query, [Image,Title,Description ,imageDate, UpdatedDate, imageID,collectionID]);
+    const results = await db.query(query, [Image,Title,UpdatedDate, imageID,collectionID]);
     res.status(201).send({
       status: true,
       data: results.rows[0]
