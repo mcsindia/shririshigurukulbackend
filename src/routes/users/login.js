@@ -53,7 +53,7 @@ module.exports = async (req, res) => {
             email: user.userName,
             userId: user.UserID
         }, SECRET_KEY, {
-            expiresIn: '1h',
+            expiresIn: '24h',
         });
 
         return res.status(200).json({
