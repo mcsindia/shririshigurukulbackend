@@ -6,6 +6,7 @@ const router = express.Router();
 router.get('/getAllUserList', require('./users/getAllUserList'));
 router.post('/insertNewGurukulUser', require('./users/insertNewGurukulUser'));
 router.post('/updateUser', require('./users/updateUser'));
+router.post('/login', require('./users/login'));
 
 //news
 router.get('/getAllNewsList', require('./news/getAllNewsList'));
