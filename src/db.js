@@ -7,16 +7,16 @@ const connection = new Client({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  port: process.env.PORT,
+  port: process.env.DB_PORT,
 });
 
 // Connect to DB and handle errors
 connection.connect((err) => {
   if (err) {
-    console.error('Error connecting to MySQL:', err.message);
+    console.error('Error connecting to PgAdmin:', err.message);
     process.exit(1);
   }
-  console.log('Connected to MySQL database');
+  console.log('Connected to PgAdmin database');
 });
 
 module.exports = connection;
