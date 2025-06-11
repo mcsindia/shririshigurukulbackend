@@ -6,9 +6,10 @@ const path = require('path');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.set('trust proxy', true);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use('/api', userRoutes);
+app.use(userRoutes);
 
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
