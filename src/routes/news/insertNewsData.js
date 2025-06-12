@@ -11,7 +11,10 @@ module.exports = async (req, res) => {
     }
 
     const fileName = req.file.filename;
-    const Image = `${req.protocol}://${req.get('host')}/uploads/website/news/${fileName}`;
+    const proto = req.headers['x-forwarded-proto'] || req.protocol;
+    const Image = `${proto}://${req.get('host')}/uploads/website/news/${fileName}`;
+
+    console.log('Image URL:', Image);
 
     const query = `
       INSERT INTO "adminSite".news ("image", "title", "slug", "description", "status")
