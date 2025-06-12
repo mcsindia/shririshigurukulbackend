@@ -7,12 +7,6 @@ module.exports = async (req, res) => {
 
     const { Title,Description, Location,Organiser,EventDate,Status } = req.body;
 
-    if (!req.file) {
-      return res.status(400).json({
-        error: 'Image file is required'
-      });
-    }
-
     if (req.params.id && req.params.id != null && req.params.id != undefined && req.params.id > 0) {
       var eventID = req.params.id
     } else {
@@ -22,8 +16,15 @@ module.exports = async (req, res) => {
       })
     }
 
+    
+    let Image;
+
+    if(req.file){
     const fileName = req.file.filename;
-    const Image = `${req.protocol}://${req.get('host')}/uploads/website/events/${fileName}`;
+    Image = `${req.protocol}://${req.get('host')}/uploads/website/events/${fileName}`;
+    }else{
+       Image = req.body.image;
+    }
 
     var UpdatedDate = new Date()
 
